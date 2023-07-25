@@ -3,25 +3,10 @@ const express = require('express');
 
 const adminRouter = express.Router();
 
-const rootDir = require('../util/path');
+const productsController = require('../controllers/products');
 
-const products = [];
+adminRouter.get('/add-product', productsController.getAddProduct);
 
-adminRouter.get('/add-product', (req, res, next) => {
-    res.render('add-product', {
-        pageTitle: 'Add Product',
-        path: '/add-product',
-        formCSS: true,
-        productCSS: true,
-        activeAddProduct: true
-    });
-});
-
-adminRouter.post('/add-product', (req, res, next) => {
-    res.redirect('/');
-    console.log(req.body);
-    products.push({title: req.body.laptop}); // mine is not title it is laptop.
-});
+adminRouter.post('/add-product', productsController.postAddProduct);
 
 exports.routes = adminRouter;
-exports.products = products;
