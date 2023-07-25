@@ -1,9 +1,22 @@
+const path = require('path');
 const express = require('express');
 
-const router = express.Router();
+const shopRouter = express.Router();
 
-router.get('/shop', (req, res, next) => {
-    res.send('shop page');
-})
+const rootDir = require('../util/path');
 
-module.exports = router;
+shopRouter.use('/', (req, res, next) => {
+    console.log(`Will this always runs?`);
+    next(); // allows the request to continue to next middleware. 
+});
+
+shopRouter.use('/add', (req, res, next) => {
+    console.log('Wow this route was hit twice. ');
+    next();
+});
+
+shopRouter.get('/', (req, res, next) => {
+    res.sendFile(path.join(rootDir, './', 'views', 'shop.html'));
+});
+
+module.exports = shopRouter;
