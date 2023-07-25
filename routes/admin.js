@@ -5,14 +5,23 @@ const adminRouter = express.Router();
 
 const rootDir = require('../util/path');
 
+const products = [];
+
 adminRouter.get('/add-product', (req, res, next) => {
-    console.log(`add-product route use method`);
-    res.sendFile(path.join(rootDir, './views/add-product.html'));
+    res.render('add-product', {
+        pageTitle: 'Add Product',
+        path: '/add-product',
+        formCSS: true,
+        productCSS: true,
+        activeAddProduct: true
+    });
 });
 
 adminRouter.post('/add-product', (req, res, next) => {
     res.redirect('/');
     console.log(req.body);
+    products.push({title: req.body.laptop}); // mine is not title it is laptop.
 });
 
-module.exports = adminRouter;
+exports.routes = adminRouter;
+exports.products = products;
